@@ -1,0 +1,14 @@
+Carga de la Base de Datos
+
+```text
+INSTRUCCIONES DE CARGA DE BASE DE DATOS (PAGILA)
+================================================
+
+Este proyecto requiere la base de datos "Pagila".
+
+Descarga Oficial
+--------------------------
+1. Descargar Pagila desde: https://github.com/devrimgunduz/pagila
+2. Ejecutar en la terminal de psql:
+   psql -U postgres -d pagila -f pagila-schema.sql
+   psql -U postgres -d pagila -f pagila-data.sql
