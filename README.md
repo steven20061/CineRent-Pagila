@@ -27,3 +27,6 @@ Este proyecto es una aplicación web desarrollada con Spring Boot y Thymeleaf pa
 1. **Clonar el repositorio:**
    ```bash
    git clone [https://github.com/steven20061/CineRent-Pagila.git](https://github.com/steven20061/CineRent-Pagila.git)
+
+2. **Instalar la base de datos Pagila:**
+   **Abrir el archivo Instalacion_BD.txt**
