@@ -6,9 +6,51 @@ INSTRUCCIONES DE CARGA DE BASE DE DATOS (PAGILA)
 
 Este proyecto requiere la base de datos "Pagila".
 
-Descarga Oficial
---------------------------
-1. Descargar Pagila desde: https://github.com/devrimgunduz/pagila
-2. Ejecutar en la terminal de psql:
-   psql -U postgres -d pagila -f pagila-schema.sql
-   psql -U postgres -d pagila -f pagila-data.sql
+REQUISITOS PREVIOS:
+1. Tener instalado PostgreSQL (versión 12 o superior recomendada).
+2. Tener instalado pgAdmin 4 (o acceso a la terminal psql).
+
+-------------------------------------------------------------------
+PASO 1: DESCARGAR LOS ARCHIVOS SQL
+-------------------------------------------------------------------
+Si los archivos 'pagila-schema.sql' y 'pagila-data.sql' NO están en la 
+carpeta /database de este proyecto, descárguelos del repositorio oficial:
+
+1. Ir a: https://github.com/devrimgunduz/pagila
+2. Hacer clic en el botón verde "Code" -> "Download ZIP".
+3. Descomprimir el archivo. Necesitaremos dos archivos:
+   - pagila-schema.sql (Crea las tablas)
+   - pagila-data.sql (Inserta los datos de prueba)
+-------------------------------------------------------------------
+PASO 2: CREAR LA BASE DE DATOS
+-------------------------------------------------------------------
+1. Abrir pgAdmin 4.
+2. Hacer clic derecho en "Databases" -> Create -> Database
+3. En "Database", escribir el nombre: pagila
+4. Dar clic en "Save".
+
+-------------------------------------------------------------------
+PASO 3: INSTALACIÓN (MÉTODO VISUAL - RECOMENDADO)
+-------------------------------------------------------------------
+IMPORTANTE: Debe ejecutarse en orden estricto (primero Schema, luego Data).
+Cargar la Estructura (Schema):
+   1. En pgAdmin, hacer clic derecho sobre la nueva base de datos 'pagila'.
+   2. Seleccionar "Query Tool" (Herramienta de Consultas).
+   3. En la barra superior, hacer clic en el icono de carpeta ("Open File").
+   4. Buscar y seleccionar el archivo 'pagila-schema.sql'.
+   5. Hacer clic en el icono de "Play" (Execute/F5) para ejecutar el script.
+   6. Verificar que diga "Query returned successfully".
+Cargar los Datos (Data):
+   1. Borrar el contenido del editor de consultas (o abrir uno nuevo).
+   2. Hacer clic en "Open File" nuevamente.
+   3. Buscar y seleccionar el archivo 'pagila-data.sql'.
+   4. Hacer clic en el icono de "Play" (Execute/F5).
+   5. Esperar a que termine (puede tardar unos segundos).
+-------------------------------------------------------------------
+PASO 4: VERIFICACIÓN
+-------------------------------------------------------------------
+Para confirmar que todo está listo:
+1. Ir a la base de datos 'pagila' -> Schemas -> public -> Tables.
+2. Deberían aparecer 21 tablas (actor, address, category, city, etc.).
+3. Hacer clic derecho en la tabla 'film' -> View/Edit Data -> All Rows.
+4. Deberían aparecer películas listadas.
