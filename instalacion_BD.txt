@@ -16,7 +16,7 @@ PASO 1: DESCARGAR LOS ARCHIVOS SQL
 Si los archivos 'pagila-schema.sql' y 'pagila-data.sql' NO están en la 
 carpeta /database de este proyecto, descárguelos del repositorio oficial:
 
-1. Ir a: https://github.com/devrimgunduz/pagila
+1. Ir a: https://github.com/xzilla/pagila/tree/master
 2. Hacer clic en el botón verde "Code" -> "Download ZIP".
 3. Descomprimir el archivo. Necesitaremos dos archivos:
    - pagila-schema.sql (Crea las tablas)
