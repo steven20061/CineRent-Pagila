@@ -1,0 +1,15 @@
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+.classpath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+*.class
+.idea/
+*.iml
+*.vscode/
+.DS_Store

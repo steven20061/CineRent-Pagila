@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>CineRent - Dashboard</title>
+    <style>
+        body { font-family: sans-serif; margin: 20px; background-color: #f4f4f9; }
+        
+        /* Estilos para las tarjetas de arriba */
+        .dashboard-cards { display: flex; gap: 20px; margin-bottom: 30px; }
+        .card { 
+            background: white; padding: 20px; border-radius: 8px; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); flex: 1; text-align: center; 
+        }
+        .card h2 { margin: 0; color: #555; font-size: 1.2em; }
+        .card p { margin: 10px 0 0; font-size: 2.5em; font-weight: bold; color: #2c3e50; }
+        
+        /* Estilos generales */
+        table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #333; color: white; }
+    </style>
+</head>
+<body>
+
+    <div style="background-color: #222; overflow: hidden; padding: 15px; margin: -20px -20px 20px -20px;">
+        <a href="/" style="color: white; padding: 14px 16px; text-decoration: none; font-weight: bold; font-size: 1.1em;">🏠 CineRent Dashboard</a>
+        <a href="/catalogo" style="color: #ccc; padding: 14px 16px; text-decoration: none;">🎬 Películas</a>
+        <a href="/clientes" style="color: #ccc; padding: 14px 16px; text-decoration: none;">👥 Clientes</a>
+        <a href="/reportes" style="color: white; padding: 14px 16px; text-decoration: none; font-weight: bold;">📊 Reportes</a>
+        <a href="/rentas" style="color: white; padding: 14px 16px; text-decoration: none; font-weight: bold;">📅 Rentas</a>
+    </div>
+
+    <h1>Resumen General</h1>
+
+    <div class="dashboard-cards">
+        <div class="card">
+            <h2>Películas en Catálogo</h2>
+            <p th:text="${totalPeliculas}">0</p>
+        </div>
+        <div class="card">
+            <h2>Clientes Activos</h2>
+            <p th:text="${clientesActivos}" style="color: green;">0</p>
+        </div>
+        <div class="card">
+            <h2>Total de Alquileres</h2>
+            <p th:text="${totalAlquileres}" style="color: orange;">0</p>
+        </div>
+        
+        <div class="card">
+            <h2>Ingresos Totales</h2>
+            <p style="color: #2196F3;">$ <span th:text="${ingresosTotales}">0.00</span></p>
+        </div>
+    </div>
+
+    <h2>📽️ Alquileres Recientes (Últimos 5)</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Cliente</th>
+                <th>Película</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="alquiler : ${ultimosAlquileres}">
+                <td th:text="${alquiler.fechaAlquiler}">Fecha</td>
+                <td th:text="${alquiler.cliente.nombre + ' ' + alquiler.cliente.apellido}">Cliente</td>
+                <td th:text="${alquiler.inventario.pelicula.titulo}">Película</td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>

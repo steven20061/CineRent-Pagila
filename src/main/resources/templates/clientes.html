@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>CineRent - Clientes</title>
+    <style>
+        body { font-family: sans-serif; margin: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #e3f2fd; }
+        .estado-activo { color: green; font-weight: bold; }
+        .estado-inactivo { color: red; font-weight: bold; }
+        .search-box { margin-bottom: 20px; padding: 10px; background: #eee; border-radius: 5px; }
+        .btn-historial {
+            background-color: #4CAF50; 
+            color: white; 
+            padding: 6px 12px; 
+            text-decoration: none; 
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        .btn-historial:hover { background-color: #45a049; }
+    </style>
+</head>
+<body>
+
+    <div style="background-color: #333; overflow: hidden; padding: 10px; margin-bottom: 20px;">
+        <a href="/" style="color: white; padding: 14px 16px; text-decoration: none; font-weight: bold; font-size: 1.1em;">🏠 CineRent Dashboard</a>
+        <a href="/catalogo" style="color: white; padding: 14px 16px; text-decoration: none;">🎬 Películas</a>
+        <a href="/clientes" style="color: white; padding: 14px 16px; text-decoration: none; font-weight: bold;">👥 Clientes</a>
+        <a href="/reportes" style="color: white; padding: 14px 16px; text-decoration: none; font-weight: bold;">📊 Reportes</a>
+        <a href="/rentas" style="color: white; padding: 14px 16px; text-decoration: none; font-weight: bold;">📅 Rentas</a>
+    </div>
+
+    <h1>Directorio de Clientes</h1>
+
+    <div class="search-box">
+        <form action="/clientes" method="get">
+            <input type="text" name="buscar" placeholder="Buscar por nombre o apellido..." 
+                   th:value="${palabraBusqueda}" style="padding: 5px; width: 300px;">
+            <button type="submit" style="padding: 5px 10px; cursor: pointer;">Buscar</button>
+            <a href="/clientes" style="margin-left: 10px; text-decoration: none; color: blue;">Limpiar</a>
+        </form>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Estado</th>
+                <th>Acciones</th> </tr>
+        </thead>
+        <tbody>
+            <tr th:each="cliente : ${listaClientes}">
+                <td th:text="${cliente.id}">1</td>
+                <td th:text="${cliente.nombre + ' ' + cliente.apellido}">Juan Perez</td>
+                <td th:text="${cliente.email}">juan@gmail.com</td>
+                <td>
+                    <span th:if="${cliente.activo == 1}" class="estado-activo">ACTIVO</span>
+                    <span th:if="${cliente.activo != 1}" class="estado-inactivo">INACTIVO</span>
+                </td>
+                <td>
+                    <a th:href="@{/clientes/{id}/historial(id=${cliente.id})}" class="btn-historial">
+                       📂 Ver Historial
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>

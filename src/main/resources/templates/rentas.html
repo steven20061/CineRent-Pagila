@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>CineRent - Alquileres por Fecha</title>
+    <style>
+        body { font-family: sans-serif; margin: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #FF9800; color: white; } /* Naranja para Rentas */
+        
+        .search-box { background: #f9f9f9; padding: 15px; border-radius: 8px; border: 1px solid #ddd; display: inline-block;}
+        input[type="date"] { padding: 5px; margin: 0 10px; }
+        button { background-color: #333; color: white; padding: 6px 12px; border: none; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <div style="background-color: #222; overflow: hidden; padding: 15px; margin: -20px -20px 20px -20px;">
+        <a href="/" style="color: #ccc; padding: 14px 16px; text-decoration: none;">🏠 Dashboard</a>
+        <a href="/catalogo" style="color: #ccc; padding: 14px 16px; text-decoration: none;">🎬 Películas</a>
+        <a href="/clientes" style="color: #ccc; padding: 14px 16px; text-decoration: none;">👥 Clientes</a>
+        <a href="/reportes" style="color: #ccc; padding: 14px 16px; text-decoration: none;">📊 Reportes</a>
+        <a href="/rentas" style="color: white; padding: 14px 16px; text-decoration: none; font-weight: bold;">📅 Rentas</a>
+    </div>
+
+    <h1>📅 Consulta de Alquileres por Fecha</h1>
+
+    <div class="search-box">
+        <form action="/rentas" method="get">
+            <label>Desde:</label>
+            <input type="date" name="desde" th:value="${param.desde}" required>
+            
+            <label>Hasta:</label>
+            <input type="date" name="hasta" th:value="${param.hasta}" required>
+            
+            <label>Tienda:</label>
+            <select name="tienda" style="padding: 5px; margin-right: 10px;">
+                <option value="">-- Todas --</option>
+                <option th:each="t : ${tiendas}" 
+                        th:value="${t.id}" 
+                        th:text="'Tienda #' + ${t.id}"
+                        th:selected="${tiendaSeleccionada == t.id}">
+                </option>
+            </select>
+            
+            <button type="submit">🔍 Filtrar</button>
+        </form>
+    </div>
+
+    <hr>
+
+    <div th:if="${rentas != null && !rentas.empty}">
+        <h3>Resultados encontrados: <span th:text="${rentas.size()}">0</span></h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Película</th>
+                    <th>Cliente</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="r : ${rentas}">
+                    <td th:text="${r.fechaAlquiler}">2022-01-01</td>
+                    <td th:text="${r.inventario.pelicula.titulo}">TITULO</td>
+                    <td th:text="${r.cliente.nombre + ' ' + r.cliente.apellido}">CLIENTE</td>
+                    <td>
+                        <span th:if="${r.fechaDevolucion != null}" style="color:green">Devuelto</span>
+                        <span th:if="${r.fechaDevolucion == null}" style="color:red">Pendiente</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div th:if="${rentas != null && rentas.empty}">
+        <p style="color: red; font-weight: bold;">No se encontraron alquileres en esas fechas.</p>
+    </div>
+
+</body>
+</html>

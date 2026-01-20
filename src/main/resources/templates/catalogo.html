@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>CineRent - Catálogo</title>
+    <style>
+        body { font-family: sans-serif; margin: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        .search-box { margin-bottom: 20px; padding: 10px; background: #eee; border-radius: 5px; }
+    </style>
+</head>
+<body>
+<div style="background-color: #333; overflow: hidden; padding: 10px; margin-bottom: 20px;">
+    <a href="/" style="color: white; padding: 14px 16px; text-decoration: none; font-weight: bold; font-size: 1.1em;">🏠 CineRent Dashboard</a>
+    <a href="/catalogo" style="color: white; padding: 14px 16px; text-decoration: none; font-weight: bold;">🎬 Películas</a>
+    <a href="/clientes" style="color: white; padding: 14px 16px; text-decoration: none;">👥 Clientes</a>
+    <a href="/reportes" style="color: white; padding: 14px 16px; text-decoration: none; font-weight: bold;">📊 Reportes</a>
+    <a href="/rentas" style="color: white; padding: 14px 16px; text-decoration: none; font-weight: bold;">📅 Rentas</a>
+</div>
+    <h1>Catálogo de Películas CineRent</h1>
+
+<div class="search-box">
+        <form action="/catalogo" method="get">
+            
+            <input type="text" name="buscar" placeholder="Título..." 
+                   th:value="${palabraBusqueda}" style="padding: 5px; width: 200px;">
+            
+            <select name="rating" style="padding: 5px; margin-left: 10px;">
+                <option value="">-- Todas las Clasificaciones --</option>
+                <option value="G" th:selected="${ratingSeleccionado == 'G'}">G (Apta todo público)</option>
+                <option value="PG" th:selected="${ratingSeleccionado == 'PG'}">PG (Guía Paternal)</option>
+                <option value="PG-13" th:selected="${ratingSeleccionado == 'PG-13'}">PG-13 (Mayores de 13)</option>
+                <option value="R" th:selected="${ratingSeleccionado == 'R'}">R (Restringido)</option>
+                <option value="NC-17" th:selected="${ratingSeleccionado == 'NC-17'}">NC-17 (Solo Adultos)</option>
+            </select>
+
+            <select name="categoria" style="padding: 5px; margin-left: 10px;">
+                <option value="">-- Todas las Categorías --</option>
+                <option th:each="cat : ${categorias}" 
+                        th:value="${cat.id}" 
+                        th:text="${cat.nombre}"
+                        th:selected="${categoriaSeleccionada == cat.id}">
+                </option>
+            </select>
+
+            <select name="actor" style="padding: 5px; margin-left: 10px; width: 150px;">
+                <option value="">-- Actores --</option>
+                <option th:each="act : ${actores}" 
+                        th:value="${act.id}" 
+                        th:text="${act.nombre + ' ' + act.apellido}"
+                        th:selected="${actorSeleccionado == act.id}">
+                </option>
+            </select>
+
+            <button type="submit" style="padding: 5px 10px; margin-left: 10px; cursor: pointer;">🔍 Filtrar</button>
+            <a href="/catalogo" style="margin-left: 10px; text-decoration: none; color: blue;">Limpiar</a>
+        </form>
+    </div>
+
+    <div th:if="${peliculas.empty}" style="color: red; font-weight: bold;">
+        No se encontraron películas con ese nombre.
+    </div>
+
+    <table th:if="${!peliculas.empty}">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Año</th>
+                <th>Descripción</th>
+                <th>Clasificación</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="peli : ${peliculas}">
+                <td th:text="${peli.id}">1</td>
+                <td th:text="${peli.titulo}">TITULO</td>
+                <td th:text="${peli.anioLanzamiento}">2006</td>
+                <td th:text="${peli.descripcion}">Descripción...</td>
+                <td th:text="${peli.clasificacion}">PG</td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>

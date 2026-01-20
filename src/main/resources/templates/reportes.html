@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>CineRent - Reportes</title>
+    <style>
+        body { font-family: sans-serif; margin: 20px; background-color: #f4f4f9; }
+        
+        table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; margin-top: 20px;}
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #673AB7; color: white; } /* Color morado para reportes */
+        
+        .rank-number { font-weight: bold; color: #673AB7; font-size: 1.2em; }
+        .bar-container { background-color: #eee; width: 100%; border-radius: 4px; height: 10px; }
+        .bar-fill { background-color: #673AB7; height: 100%; border-radius: 4px; }
+    </style>
+</head>
+<body>
+
+    <div style="background-color: #222; overflow: hidden; padding: 15px; margin: -20px -20px 20px -20px;">
+        <a href="/" style="color: #ccc; padding: 14px 16px; text-decoration: none;">🏠 Dashboard</a>
+        <a href="/catalogo" style="color: #ccc; padding: 14px 16px; text-decoration: none;">🎬 Películas</a>
+        <a href="/clientes" style="color: #ccc; padding: 14px 16px; text-decoration: none;">👥 Clientes</a>
+        <a href="/reportes" style="color: white; padding: 14px 16px; text-decoration: none; font-weight: bold;">📊 Reportes</a>
+        <a href="/rentas" style="color: white; padding: 14px 16px; text-decoration: none; font-weight: bold;">📅 Rentas</a>
+    </div>
+
+    <h1>📊 Rankings y Estadísticas</h1>
+
+    <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+
+        <div style="flex: 1; min-width: 400px;">
+            <h2 style="color: #673AB7;">🏆 Top 10 Películas</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 40px;">#</th>
+                        <th>Título</th>
+                        <th>Rentas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="item, stat : ${topPeliculas}">
+                        <td th:text="${stat.count}" class="rank-number">1</td>
+                        <td th:text="${item.titulo}">TITULO</td>
+                        <td th:text="${item.cantidad}" style="font-weight: bold;">10</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div style="flex: 1; min-width: 400px;">
+            <h2 style="color: #009688;">🥇 Top 10 Clientes VIP</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 40px; background-color: #009688;">#</th>
+                        <th style="background-color: #009688;">Cliente</th>
+                        <th style="background-color: #009688;">Rentas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="cliente, stat : ${topClientes}">
+                        <td th:text="${stat.count}" style="color: #009688; font-weight: bold; font-size: 1.2em;">1</td>
+                        <td th:text="${cliente.nombre + ' ' + cliente.apellido}">NOMBRE</td>
+                        <td th:text="${cliente.cantidad}" style="font-weight: bold;">20</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+    </div> <h2 style="color: #2196F3; margin-top: 40px;">💰 Reporte de Ingresos Mensuales</h2>
+    
+    <table style="margin-bottom: 50px;">
+        <thead>
+            <tr>
+                <th style="background-color: #2196F3;">Mes / Año</th>
+                <th style="background-color: #2196F3;">Total Recaudado</th>
+                <th style="background-color: #2196F3;">Gráfica</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="dato : ${ingresosMensuales}">
+                <td th:text="${dato.mes}" style="font-weight: bold;">2022-05</td>
+                <td th:text="'$ ' + ${dato.total}">$ 5000.00</td>
+                <td>
+                    <div class="bar-container">
+                        <div class="bar-fill" 
+                             th:style="'background-color: #2196F3; width:' + (${dato.total} / 200) + 'px; max-width: 100%;'">
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>

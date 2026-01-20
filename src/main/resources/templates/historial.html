@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Historial de Alquileres</title>
+    <style>
+        body { font-family: sans-serif; margin: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #ffe0b2; } /* Color naranja suave */
+        .devuelto { color: green; font-weight: bold; }
+        .pendiente { color: red; font-weight: bold; background-color: #ffe6e6; }
+    </style>
+</head>
+<body>
+
+    <div style="background-color: #333; overflow: hidden; padding: 10px; margin-bottom: 20px;">
+        <a href="/" style="color: white; padding: 14px 16px; text-decoration: none; font-weight: bold; font-size: 1.1em;">🏠 CineRent Dashboard</a>
+        <a href="/catalogo" style="color: white; padding: 14px 16px; text-decoration: none;">🎬 Películas</a>
+        <a href="/clientes" style="color: white; padding: 14px 16px; text-decoration: none; font-weight: bold;">👥 Clientes</a>
+        <a href="/reportes" style="color: white; padding: 14px 16px; text-decoration: none; font-weight: bold;">📊 Reportes</a>
+        <a href="/rentas" style="color: white; padding: 14px 16px; text-decoration: none; font-weight: bold;">📅 Rentas</a>
+    </div>
+
+    <h1>Historial de: <span th:text="${cliente.nombre + ' ' + cliente.apellido}">Nombre Cliente</span></h1>
+    <a href="/clientes">← Volver a la lista de clientes</a>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Película</th>
+                <th>Fecha Alquiler</th>
+                <th>Fecha Devolución</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="alquiler : ${historial}">
+                <td th:text="${alquiler.inventario.pelicula.titulo}">TITULO PELICULA</td>
+                
+                <td th:text="${alquiler.fechaAlquiler}">2022-01-01</td>
+                <td th:text="${alquiler.fechaDevolucion}">2022-01-05</td>
+                
+                <td>
+                    <span th:if="${alquiler.fechaDevolucion != null}" class="devuelto">DEVUELTO</span>
+                    <span th:if="${alquiler.fechaDevolucion == null}" class="pendiente">NO DEVUELTO</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>
